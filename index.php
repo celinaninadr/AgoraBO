@@ -32,7 +32,7 @@ switch($uc){
     case 'gererGenres' : {
 		$menuActif = 'Jeux';	// pour garder le menu correspondant ouvert
 		require 'vue/v_menu.php';
-		require 'controleur/c_gererGenres.php'; // qui a été demandé d'ajouter
+		require 'controleur/c_gererGenres.php';
 		break;
     }  
 }
