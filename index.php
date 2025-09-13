@@ -35,6 +35,13 @@ switch($uc){
 		require 'controleur/c_gererGenres.php';
 		break;
     }  
+
+	case 'gererMarques' : {
+		$menuActif = 'Jeux';	// pour garder le menu correspondant ouvert
+		require 'vue/v_menu.php';
+		require 'controleur/c_gererMarques.php';
+		break;
+    }  
 }
 
 // Fermeture de la connexion (C)
