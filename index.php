@@ -41,7 +41,13 @@ switch($uc){
 		require 'vue/v_menu.php';
 		require 'controleur/c_gererMarques.php';
 		break;
-    }  
+    }
+	case 'gererPegis' : {
+		$menuActif = 'Jeux';	// pour garder le menu correspondant ouvert
+		require 'vue/v_menu.php';
+		require 'controleur/c_gererPegis.php';
+		break;
+    }
 }
 
 // Fermeture de la connexion (C)

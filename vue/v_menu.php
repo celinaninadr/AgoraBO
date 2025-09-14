@@ -19,7 +19,7 @@
               <li><a href="index.php?uc=gererGenres">Genres</a></li>
               <li><a href="index.php">Plateformes</a></li>
               <li><a href="index.php?uc=gererMarques">Marques</a></li>
-			  <li><a href="index.php">Pegi</a></li>
+			  <li><a href="index.php?uc=gererPegis">Pegi</a></li>
 			  <li><a href="index.php">Tournois</a></li>
             </ul>
           </li>
