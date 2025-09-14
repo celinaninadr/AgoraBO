@@ -34,8 +34,27 @@ switch($uc){
 		require 'vue/v_menu.php';
 		// à compléter
 		break;
+<<<<<<< Updated upstream
+=======
+	}
+	case 'gererPegi': {
+		$menuActif = 'Jeux';	// pour garder le menu correspondant ouvert
+		require 'vue/v_menu.php';
+		require 'controleur/c_gererPegi.php';
+		break;
+		case 'gererMarques' : {
+		$menuActif = 'Jeux';	// pour garder le menu correspondant ouvert
+		require 'vue/v_menu.php';
+		require 'controleur/c_gererMarques.php';
+		break;
+>>>>>>> Stashed changes
     }  
 }
+}
+
+
+
+
 
 // Fermeture de la connexion (C)
 $db = null;	

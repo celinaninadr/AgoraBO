@@ -151,7 +151,99 @@ class PdoJeux {
 				.$e->getmessage().'</p></div>');
         }
     }
+<<<<<<< Updated upstream
 	
+=======
+     //==============================================================================
+	//
+	//	METHODES POUR LA GESTION DES MARQUES
+	//
+	//==============================================================================
+	
+    /**
+     * Retourne toutes les marque sous forme d'un tableau d'objets 
+     * 
+     * @return array le tableau d'objets  (Marque)
+     */
+    public function getLesMarques(): array {
+  		$requete =  'SELECT idMarque as identifiant, nomMarque as nom 
+						FROM marque
+						ORDER BY nomMarque';
+		try	{	 
+			$resultat = PdoJeux::$monPdo->query($requete);
+			$tbMarques  = $resultat->fetchAll();	
+			return $tbMarques;		
+		}
+		catch (PDOException $e)	{  
+			die('<div class = "erreur">Erreur dans la requête !<p>'
+				.$e->getmessage().'</p></div>');
+		}
+    }
+
+
+
+    /**
+	 * Ajoute une nouvelle marque avec le nom donné en paramètre
+	 * 
+	 * @param string $nomMarque : le nom de la marque à ajouter
+	 * @return int l'identifiant de la marque crée
+	 */
+    public function ajouterMarque(string $nomMarque): int {
+        try {
+            $requete_prepare = PdoJeux::$monPdo->prepare("INSERT INTO marque "
+                    . "(idMarque, nomMarque) "
+                    . "VALUES (0, :unNomMarque) ");
+            $requete_prepare->bindParam(':unNomMarque', $nomMarque, PDO::PARAM_STR);
+            $requete_prepare->execute();
+			// récupérer l'identifiant crée
+			return PdoJeux::$monPdo->lastInsertId(); 
+        } catch (Exception $e) {
+            die('<div class = "erreur">Erreur dans la requête !<p>'
+				.$e->getmessage().'</p></div>');
+        }
+    }
+	
+	
+	 /**
+     * Modifie le nom de la marque donné en paramètre
+     * 
+     * @param int $idMarque : l'identifiant de la marque à modifier  
+     * @param string $nomMarque : le nom modifié
+     */
+    public function modifierMarque(int $idMarque, string $nomMarque): void {
+        try {
+            $requete_prepare = PdoJeux::$monPdo->prepare("UPDATE marque "
+                    . "SET nomMarque = :unNomMarque "
+                    . "WHERE marque.idMarque = :unIdMarque");
+            $requete_prepare->bindParam(':unIdMarque', $idMarque, PDO::PARAM_INT);
+            $requete_prepare->bindParam(':unNomMarque', $nomMarque, PDO::PARAM_STR);
+            $requete_prepare->execute();
+        } catch (Exception $e) {
+            die('<div class = "erreur">Erreur dans la requête !<p>'
+				.$e->getmessage().'</p></div>');
+        }
+    }
+	
+	
+	/**
+     * Supprime la marque donnée en paramètre
+     * 
+     * @param int $idMarque :l'identifiant de la marque à supprimer 
+     */
+    public function supprimerMarque(int $idMarque): void {
+       try {
+            $requete_prepare = PdoJeux::$monPdo->prepare("DELETE FROM marque "
+                    . "WHERE marque.idMarque = :unIdMarque");
+            $requete_prepare->bindParam(':unIdMarque', $idMarque, PDO::PARAM_INT);
+            $requete_prepare->execute();
+        } catch (Exception $e) {
+            die('<div class = "erreur">Erreur dans la requête !<p>'
+				.$e->getmessage().'</p></div>');
+        }
+    }
+	
+
+>>>>>>> Stashed changes
 
 
 }
