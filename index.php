@@ -34,8 +34,6 @@ switch($uc){
 		require 'vue/v_menu.php';
 		// à compléter
 		break;
-<<<<<<< Updated upstream
-=======
 	}
 	case 'gererPegi': {
 		$menuActif = 'Jeux';	// pour garder le menu correspondant ouvert
@@ -47,7 +45,6 @@ switch($uc){
 		require 'vue/v_menu.php';
 		require 'controleur/c_gererMarques.php';
 		break;
->>>>>>> Stashed changes
     }  
 }
 }
