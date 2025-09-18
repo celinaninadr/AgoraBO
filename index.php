@@ -20,6 +20,7 @@ $db = PdoJeux::getPdoJeux();
 if (!isset($_GET['uc'])){
     $_GET['uc'] = 'index';
 }
+
 $uc = $_GET['uc'];
 
 // selon la valeur du use case demandé(uc) on inclut le contrôleur secondaire
