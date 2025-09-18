@@ -523,8 +523,8 @@ class PdoJeux {
     public function ajouterPlateforme(string $libPlateforme): int {
         try {
             $requete_prepare = PdoJeux::$monPdo->prepare("INSERT INTO plateforme "
-                    . "(libPlateforme) "
-                    . "VALUES (:unLibPlateforme) ");
+                    . "(idPlateforme, libPlateforme) "
+                    . "VALUES (0, :unLibPlateforme) ");
             $requete_prepare->bindParam(':unLibPlateforme', $libPlateforme, PDO::PARAM_STR);
             $requete_prepare->execute();
             // récupérer l'identifiant crée

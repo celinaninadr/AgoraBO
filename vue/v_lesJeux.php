@@ -88,7 +88,8 @@ $tbPlateformes = $db->getLesPlateformes();
                             <!-- Formulaire pour modifier et supprimer les jeux -->
                             <form action="index.php?uc=gererJeux" method="post">
                                 <td><?php echo $jeu->identifiant; ?><input type="hidden" name="txtRefJeu" value="<?php echo $jeu->identifiant; ?>" /></td>
-                                <td><?php
+                                <td>
+                                    <?php
                                     if ($jeu->identifiant != $refJeuModif) {
                                         echo $jeu->nom; 
                                     ?>
