@@ -312,20 +312,20 @@ class PdoJeux {
     
     
 
-    //==============================================================================
+ //==============================================================================
 	//
 	//	METHODES POUR LA GESTION DES MARQUES
 	//
 	//==============================================================================
 	
     /**
-     * Retourne tous les marques sous forme d'un tableau d'objets 
+     * Retourne toutes les marque sous forme d'un tableau d'objets 
      * 
      * @return array le tableau d'objets  (Marque)
      */
     public function getLesMarques(): array {
   		$requete =  'SELECT idMarque as identifiant, nomMarque as nom 
-						FROM marque 
+						FROM marque
 						ORDER BY nomMarque';
 		try	{	 
 			$resultat = PdoJeux::$monPdo->query($requete);
@@ -338,9 +338,10 @@ class PdoJeux {
 		}
     }
 
-	
-	/**
-	 * Ajoute un nouvelle marque avec le libellé donné en paramètre
+
+
+    /**
+	 * Ajoute une nouvelle marque avec le nom donné en paramètre
 	 * 
 	 * @param string $nomMarque : le nom de la marque à ajouter
 	 * @return int l'identifiant de la marque crée
@@ -367,7 +368,7 @@ class PdoJeux {
      * @param int $idMarque : l'identifiant de la marque à modifier  
      * @param string $nomMarque : le nom modifié
      */
-    public function modifieMarque(int $idMarque, string $nomMarque): void {
+    public function modifierMarque(int $idMarque, string $nomMarque): void {
         try {
             $requete_prepare = PdoJeux::$monPdo->prepare("UPDATE marque "
                     . "SET nomMarque = :unNomMarque "
@@ -383,7 +384,7 @@ class PdoJeux {
 	
 	
 	/**
-     * Supprime la marque donné en paramètre
+     * Supprime la marque donnée en paramètre
      * 
      * @param int $idMarque :l'identifiant de la marque à supprimer 
      */
@@ -398,6 +399,7 @@ class PdoJeux {
 				.$e->getmessage().'</p></div>');
         }
     }
+	
 
     //==============================================================================
     //
@@ -427,23 +429,26 @@ class PdoJeux {
     }
 
     /**
-     * Ajoute un nouveau pegi avec le libellé donné en paramètre
+     * Ajoute un nouveau pegi avec l'âge limite et la description donnés en paramètre
      * 
-     * @param string $ageLimite : le libelle du pegi à ajouter
-     * @return int l'identifiant du pegi crée
+     * @param int $ageLimite : l'âge limite du pegi
+     * @param string $descPegi : la description du pegi à ajouter
+     * @return int l'identifiant du pegi créé
      */
-    public function ajouterPegi(string $ageLimite): int {
+    public function ajouterPegi(int $ageLimite, string $descPegi): int
+    {
         try {
             $requete_prepare = PdoJeux::$monPdo->prepare("INSERT INTO pegi "
-                    . "(idPegi, ageLimite) "
-                    . "VALUES (0, :unAgeLimite) ");
-            $requete_prepare->bindParam(':unAgeLimite', $ageLimite, PDO::PARAM_STR);
+                . "(ageLimite, descPegi) "
+                . "VALUES (:unAgeLimite, :uneDescPegi) ");
+            $requete_prepare->bindParam(':unAgeLimite', $ageLimite, PDO::PARAM_INT);
+            $requete_prepare->bindParam(':uneDescPegi', $descPegi, PDO::PARAM_STR);
             $requete_prepare->execute();
-            // récupérer l'identifiant crée
-            return PdoJeux::$monPdo->lastInsertId(); 
+            // récupérer l'identifiant créé
+            return PdoJeux::$monPdo->lastInsertId();
         } catch (Exception $e) {
             die('<div class = "erreur">Erreur dans la requête !<p>'
-                .$e->getmessage().'</p></div>');
+                . $e->getmessage() . '</p></div>');
         }
     }
 

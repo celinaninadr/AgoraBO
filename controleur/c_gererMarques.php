@@ -1,6 +1,6 @@
 	<?php
 	// si le paramètre action n'est pas positionné alors
-	//		si aucun bouton "action" n'a été envoyé alors par défaut on affiche les genres
+	//		si aucun bouton "action" n'a été envoyé alors par défaut on affiche les marques
 	//		sinon l'action est celle indiquée par le bouton
 
 	if (!isset($_POST['cmdAction'])) {
@@ -18,9 +18,9 @@
 	switch($action) {
 
 		case 'ajouterNouvelleMarque': {		
-			if (!empty($_POST['txtnomMarque'])) {
+			if (!empty($_POST['txtNomMarque'])) {
 				$idMarqueNotif = $db->ajouterMarque($_POST['txtNomMarque']);
-				// $idMarqueNotif est l'idMarque de la marque ajouté
+				// $idMarqueNotif est l'idMarque de la marque ajoutée
 				$notification = 'Ajouté';	// sert à afficher l'ajout réalisé dans la vue
 			}
 		  break;
@@ -33,19 +33,19 @@
 			
 		case 'validerModifierMarque': {
 			$db->modifierMarque($_POST['txtIdMarque'], $_POST['txtNomMarque']); 
-			$idMarqueNotif = $_POST['txtIdMarque']; // $idGenreNotif est l'idMarque de la marque modifiée
+			$idMarqueNotif = $_POST['txtIdMarque']; // $idMarqueNotif est l'idMarque de la marque modifiée
 			$notification = 'Modifié';  // sert à afficher la modification réalisée dans la vue
 			break;
 		}
 
 		case 'supprimerMarque': {
 			$idMarque = $_POST['txtIdMarque'];
-			$db-> supprimerMarque($_POST['txtIdMarque']); //  à vérifier, voir quelle méthode appeler dans le modèle
+			$db->supprimerMarque($_POST['txtIdMarque']); //  à compléter, voir quelle méthode appeler dans le modèle
 			break;
 		}
 	}
 		
-	// l' affichage des marque se fait dans tous les cas	
+	// l' affichage des marques se fait dans tous les cas	
 	$tbMarques  = $db->getLesMarques();		
 	require 'vue/v_lesMarques.php';
 
