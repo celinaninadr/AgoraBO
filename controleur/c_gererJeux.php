@@ -27,8 +27,6 @@ switch($action) {
                 $_POST['txtGenreJeu'] ?? '',
                 $_POST['txtPlateformeJeu'] ?? '',
                 $_POST['txtPegiJeu'] ?? 0,
-                $_POST['txtPrixJeu'] ?? 0,
-                $_POST['txtDateJeu'] ?? ''
             );
             // $refJeuNotif est la référence du jeu ajouté
             $notification = 'Ajouté';	// sert à afficher l'ajout réalisé dans la vue

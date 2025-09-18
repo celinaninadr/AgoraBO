@@ -88,7 +88,8 @@ $tbPlateformes = $db->getLesPlateformes();
                             <!-- Formulaire pour modifier et supprimer les jeux -->
                             <form action="index.php?uc=gererJeux" method="post">
                                 <td><?php echo $jeu->identifiant; ?><input type="hidden" name="txtRefJeu" value="<?php echo $jeu->identifiant; ?>" /></td>
-                                <td><?php
+                                <td>
+                                    <?php
                                     if ($jeu->identifiant != $refJeuModif) {
                                         echo $jeu->nom; 
                                     ?>
@@ -133,7 +134,7 @@ $tbPlateformes = $db->getLesPlateformes();
                                 }
                                 else {
                                     ?><input type="text" id="txtNomJeu" name="txtNomJeu" size="24" required minlength="4" maxlength="24" value="<?php echo htmlspecialchars($jeu->nom); ?>" />
-                                    </td>
+                                    
                                     <td>
                                         <select id="txtMarqueJeu" name="txtMarqueJeu" required>
                                             <option value="">-- Choisir une marque --</option>

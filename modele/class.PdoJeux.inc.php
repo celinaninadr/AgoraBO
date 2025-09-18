@@ -249,7 +249,7 @@ class PdoJeux {
         string $nomMarque,
         string $libGenre,
         string $libPlateforme,
-        int $idPegi,
+        int $idPegi
     ): void {
         try {
             // Conversion des libellés en ids
@@ -258,18 +258,36 @@ class PdoJeux {
             $stmtMarque->bindParam(':nomMarque', $nomMarque, PDO::PARAM_STR);
             $stmtMarque->execute();
             $idMarque = $stmtMarque->fetchColumn();
+            if (!$idMarque) {
+                throw new Exception("La marque '$nomMarque' n'existe pas");
+            }
 
             $sqlGenre = "SELECT idGenre FROM genre WHERE libGenre = :libGenre";
             $stmtGenre = self::$monPdo->prepare($sqlGenre);
             $stmtGenre->bindParam(':libGenre', $libGenre, PDO::PARAM_STR);
             $stmtGenre->execute();
             $idGenre = $stmtGenre->fetchColumn();
+            if (!$idGenre) {
+                throw new Exception("Le genre '$libGenre' n'existe pas");
+            }
 
             $sqlPlateforme = "SELECT idPlateforme FROM plateforme WHERE libPlateforme = :libPlateforme";
             $stmtPlateforme = self::$monPdo->prepare($sqlPlateforme);
             $stmtPlateforme->bindParam(':libPlateforme', $libPlateforme, PDO::PARAM_STR);
             $stmtPlateforme->execute();
             $idPlateforme = $stmtPlateforme->fetchColumn();
+            if (!$idPlateforme) {
+                throw new Exception("La plateforme '$libPlateforme' n'existe pas");
+            }
+
+            // Vérification que le PEGI existe
+            $sqlPegi = "SELECT COUNT(*) FROM pegi WHERE idPegi = :idPegi";
+            $stmtPegi = self::$monPdo->prepare($sqlPegi);
+            $stmtPegi->bindParam(':idPegi', $idPegi, PDO::PARAM_INT);
+            $stmtPegi->execute();
+            if ($stmtPegi->fetchColumn() == 0) {
+                throw new Exception("Le PEGI avec l'ID $idPegi n'existe pas");
+            }
 
             // Mise à jour du jeu
             $requete_prepare = self::$monPdo->prepare("UPDATE jeu_video 
@@ -279,16 +297,18 @@ class PdoJeux {
                     idPlateforme = :unIdPlateforme, 
                     idPegi = :unIdPegi
                 WHERE refJeu = :unRefJeu");
+            
             $requete_prepare->bindParam(':unRefJeu', $refJeu, PDO::PARAM_STR);
             $requete_prepare->bindParam(':unNom', $nomJeu, PDO::PARAM_STR);
             $requete_prepare->bindParam(':unIdMarque', $idMarque, PDO::PARAM_INT);
             $requete_prepare->bindParam(':unIdGenre', $idGenre, PDO::PARAM_INT);
             $requete_prepare->bindParam(':unIdPlateforme', $idPlateforme, PDO::PARAM_INT);
             $requete_prepare->bindParam(':unIdPegi', $idPegi, PDO::PARAM_INT);
+            
             $requete_prepare->execute();
         } catch (Exception $e) {
-            die('<div class = "erreur">Erreur dans la requête !<p>'
-                .$e->getmessage().'</p></div>');
+            die('<div class="erreur">Erreur dans la requête !<p>'
+                . $e->getMessage() . '</p></div>');
         }
     }
 	
@@ -523,8 +543,8 @@ class PdoJeux {
     public function ajouterPlateforme(string $libPlateforme): int {
         try {
             $requete_prepare = PdoJeux::$monPdo->prepare("INSERT INTO plateforme "
-                    . "(libPlateforme) "
-                    . "VALUES (:unLibPlateforme) ");
+                    . "(idPlateforme, libPlateforme) "
+                    . "VALUES (0, :unLibPlateforme) ");
             $requete_prepare->bindParam(':unLibPlateforme', $libPlateforme, PDO::PARAM_STR);
             $requete_prepare->execute();
             // récupérer l'identifiant crée

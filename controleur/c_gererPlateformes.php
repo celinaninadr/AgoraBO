@@ -18,8 +18,8 @@
 	switch($action) {
 
 		case 'ajouterNouvellePlateforme': {		
-			if (!empty($_POST['txtLibPlateforme'])) {
-				$idPlateformeNotif = $db->ajouterPlateforme($_POST['txtLibPlateforme']);
+			if (!empty($_POST['txtNomPlateforme'])) {
+				$idPlateformeNotif = $db->ajouterPlateforme($_POST['txtNomPlateforme']);
 				// $idPlateformeNotif est l'idPlateforme du plateforme ajouté
 				$notification = 'Ajouté';	// sert à afficher l'ajout réalisé dans la vue
 			}
@@ -32,7 +32,7 @@
 		}
 
 		case 'validerModifierPlateforme': {
-			$db->modifierPlateforme($_POST['txtIdPlateforme'], $_POST['txtLibPlateforme']); 
+			$db->modifierPlateforme($_POST['txtIdPlateforme'], $_POST['txtNomPlateforme']); 
 			$idPlateformeNotif = $_POST['txtIdPlateforme']; // $idPlateformeNotif est l'idPlateforme du plateforme modifié
 			$notification = 'Modifié';  // sert à afficher la modification réalisée dans la vue
 			break;
