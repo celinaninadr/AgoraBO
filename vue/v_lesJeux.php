@@ -37,7 +37,7 @@ $tbPlateformes = $db->getLesPlateformes();
 							<select id="txtMarqueJeu" name="txtMarqueJeu" required>
                                 <option value="">-- Choisir une marque --</option>
                                 <?php foreach ($tbMarques as $marque) { ?>
-                                    <option value="<?php echo htmlspecialchars($marque->libelle); ?>">
+                                    <option value="<?php echo htmlspecialchars($marque->nom); ?>">
                                         <?php echo htmlspecialchars($marque->nom); ?>
                                     </option>
                                 <?php } ?>
@@ -67,7 +67,7 @@ $tbPlateformes = $db->getLesPlateformes();
                             <select id="txtPegiJeu" name="txtPegiJeu" required>
                                 <option value="">-- Choisir un Pegi --</option>
                                 <?php foreach ($tbPegis as $pegi) { ?>
-                                    <option value="<?php echo htmlspecialchars($pegi->libelle); ?>">
+                                    <option value="<?php echo htmlspecialchars($pegi->ageLimite); ?>">
                                         <?php echo htmlspecialchars($pegi->ageLimite); ?>
                                     </option>
                                 <?php } ?>
@@ -138,8 +138,8 @@ $tbPlateformes = $db->getLesPlateformes();
                                         <select id="txtMarqueJeu" name="txtMarqueJeu" required>
                                             <option value="">-- Choisir une marque --</option>
                                             <?php foreach ($tbMarques as $marque) { ?>
-                                                <option value="<?php echo htmlspecialchars($marque->libelle); ?>">
-                                                    <?php echo htmlspecialchars($marque->libelle); ?>
+                                                <option value="<?php echo htmlspecialchars($marque->nom); ?>" <?php if ($marque->nom == $jeu->marque) echo 'selected'; ?>>
+                                                    <?php echo htmlspecialchars($marque->nom); ?>
                                                 </option>
                                             <?php } ?>
                                         </select>
@@ -158,7 +158,7 @@ $tbPlateformes = $db->getLesPlateformes();
                                         <select id="txtPlateformeJeu" name="txtPlateformeJeu" required>
                                             <option value="">-- Choisir une plateforme --</option>
                                             <?php foreach ($tbPlateformes as $plateforme) { ?>
-                                                <option value="<?php echo htmlspecialchars($plateforme->libelle); ?>">
+                                                <option value="<?php echo htmlspecialchars($plateforme->libelle); ?>" <?php if ($plateforme->libelle == $jeu->plateforme) echo 'selected'; ?>>
                                                     <?php echo htmlspecialchars($plateforme->libelle); ?>
                                                 </option>
                                             <?php } ?>
@@ -168,8 +168,8 @@ $tbPlateformes = $db->getLesPlateformes();
                                         <select id="txtPegiJeu" name="txtPegiJeu" required>
                                             <option value="">-- Choisir un Pegi --</option>
                                             <?php foreach ($tbPegis as $pegi) { ?>
-                                                <option value="<?php echo htmlspecialchars($pegi->libelle); ?>">
-                                                    <?php echo htmlspecialchars($pegi->libelle); ?>
+                                                <option value="<?php echo htmlspecialchars($pegi->ageLimite); ?>"<?php if ($pegi->ageLimite == $jeu->pegi) echo 'selected'; ?>>
+                                                    <?php echo htmlspecialchars($pegi->ageLimite); ?>
                                                 </option>
                                             <?php } ?>
                                         </select>

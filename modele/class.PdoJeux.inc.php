@@ -193,29 +193,43 @@ class PdoJeux {
      * @param string $genreJeu : le genre du jeu à ajouter
      * @param string $plateformeJeu : la plateforme du jeu à ajouter
      * @param int $pegiJeu : le pegi du jeu à ajouter
-	 * @return int l'identifiant du jeu crée
 	 */
-    public function ajouterJeu(string $nomJeu, string $marqueJeu, string $genreJeu, string $plateformeJeu, string $pegiJeu): int {
+    public function ajouterJeu(string $refJeu, string $nomJeu, string $marqueJeu, string $genreJeu, string $plateformeJeu, string $pegiJeu): int {
         try {
-            $requete_prepare = PdoJeux::$monPdo->prepare("INSERT INTO jeu_video "
-                    . "(refJeu, nom, idMarque, idGenre, idPlateforme, idPegi) "
-                    . "VALUES (:uneRefJeu, :unNom, 
-                        (SELECT idMarque FROM marque WHERE nomMarque = :uneMarque), 
-                        (SELECT idGenre FROM genre WHERE libGenre = :unGenre), 
-                        (SELECT idPlateforme FROM plateforme WHERE libPlateforme = :unePlateforme), 
-                        (SELECT idPegi FROM pegi WHERE ageLimite = :unPegi) )");
-            // liaison de la valeur de la variable $nomJeu au paramètre :unNom
-            // dans la requête SQL
+
+            // Vérification de l'existence
+            $check = PdoJeux::$monPdo->prepare("SELECT refJeu FROM jeu_video WHERE refJeu = :refJeu");
+            $check->bindParam(':refJeu', $refJeu, PDO::PARAM_STR);
+            $check->execute();
+            
+            if ($check->rowCount() > 0) {
+                throw new Exception("Un jeu avec la référence '$refJeu' existe déjà dans la base");
+            }
+
+            $requete_prepare = PdoJeux::$monPdo->prepare("INSERT INTO jeu_video 
+                (refJeu, nom, idMarque, idGenre, idPlateforme, idPegi) 
+                VALUES (:uneRefJeu, :unNom, 
+                    (SELECT idMarque FROM marque WHERE nomMarque = :uneMarque), 
+                    (SELECT idGenre FROM genre WHERE libGenre = :unGenre), 
+                    (SELECT idPlateforme FROM plateforme WHERE libPlateforme = :unePlateforme), 
+                    (SELECT idPegi FROM pegi WHERE ageLimite = :unPegi))");
+        
             $requete_prepare->bindParam(':uneRefJeu', $refJeu, PDO::PARAM_STR);
             $requete_prepare->bindParam(':unNom', $nomJeu, PDO::PARAM_STR);
             $requete_prepare->bindParam(':uneMarque', $marqueJeu, PDO::PARAM_STR);
             $requete_prepare->bindParam(':unGenre', $genreJeu, PDO::PARAM_STR);
             $requete_prepare->bindParam(':unePlateforme', $plateformeJeu, PDO::PARAM_STR);
             $requete_prepare->bindParam(':unPegi', $pegiJeu, PDO::PARAM_STR);
+            
             $requete_prepare->execute();
+            return 1;
+            
+        } catch (PDOException $e) {
+            // Afficher plus de détails sur l'erreur SQL
+            die('<div class="erreur">Erreur SQL : ' . $e->getCode() . '<p>' 
+                . $e->getMessage() . '</p></div>');
         } catch (Exception $e) {
-            die('<div class = "erreur">Erreur dans la requête !<p>'
-                .$e->getmessage().'</p></div>');
+            die('<div class="erreur">Erreur : <p>' . $e->getMessage() . '</p></div>');
         }
     }
 	
@@ -504,8 +518,8 @@ class PdoJeux {
     public function ajouterPlateforme(string $libPlateforme): int {
         try {
             $requete_prepare = PdoJeux::$monPdo->prepare("INSERT INTO plateforme "
-                    . "(idPlateforme, libPlateforme) "
-                    . "VALUES (0, :unLibPlateforme) ");
+                    . "(libPlateforme) "
+                    . "VALUES (:unLibPlateforme) ");
             $requete_prepare->bindParam(':unLibPlateforme', $libPlateforme, PDO::PARAM_STR);
             $requete_prepare->execute();
             // récupérer l'identifiant crée
@@ -529,6 +543,23 @@ class PdoJeux {
                     . "WHERE plateforme.idPlateforme = :unIdPlateforme");
             $requete_prepare->bindParam(':unIdPlateforme', $idPlateforme, PDO::PARAM_INT);
             $requete_prepare->bindParam(':unLibPlateforme', $libPlateforme, PDO::PARAM_STR);
+            $requete_prepare->execute();
+        } catch (Exception $e) {
+            die('<div class = "erreur">Erreur dans la requête !<p>'
+                .$e->getmessage().'</p></div>');
+        }
+    }
+
+    /**
+     * Supprime le plateforme donné en paramètre
+     * 
+     * @param int $idPlateforme :l'identifiant du plateforme à supprimer 
+     */
+    public function supprimerPlateforme(int $idPlateforme): void {
+       try {
+            $requete_prepare = PdoJeux::$monPdo->prepare("DELETE FROM plateforme "
+                    . "WHERE plateforme.idPlateforme = :unIdPlateforme");
+            $requete_prepare->bindParam(':unIdPlateforme', $idPlateforme, PDO::PARAM_INT);
             $requete_prepare->execute();
         } catch (Exception $e) {
             die('<div class = "erreur">Erreur dans la requête !<p>'

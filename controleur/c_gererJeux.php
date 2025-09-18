@@ -21,7 +21,7 @@ switch($action) {
     case 'ajouterNouveauJeu': {		
         if (!empty($_POST['txtNomJeu'])) {
             $refJeuNotif = $db->ajouterJeu(
-                $_POST['txtRefJeu'] ?? '',
+                $_POST['txtRefJeu'],
                 $_POST['txtNomJeu'],
                 $_POST['txtMarqueJeu'] ?? '',
                 $_POST['txtGenreJeu'] ?? '',

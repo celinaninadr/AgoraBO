@@ -40,7 +40,7 @@
 
 		case 'supprimerPlateforme': {
 			$idPlateforme = $_POST['txtIdPlateforme'];
-			$db->supprimerPlateforme($idPlateforme); //  à vérifier, voir quelle méthode appeler dans le modèle
+			$db->supprimerPlateforme($_POST['txtIdPlateforme']); //  à vérifier, voir quelle méthode appeler dans le modèle
 			break;
 		}
 	}
