@@ -27,14 +27,39 @@ switch($uc){
 	case 'index' : {
 		$menuActif = '';
 		require 'vue/v_menu.php';
-        require 'vue/v_accueil.html'; break;
+        require 'vue/v_accueil.html'; 
+		break;
 	}
     case 'gererGenres' : {
-		$menuActif = 'Jeux';	// pour garder le menu correspondant ouvert
+		$menuActif = 'Genre';	// pour garder le menu correspondant ouvert
 		require 'vue/v_menu.php';
-		// à compléter
+		require 'controleur/c_gererGenres.php';
 		break;
     }  
+	case 'gererJeux' : {
+		$menuActif = 'Jeux';	// pour garder le menu correspondant ouvert
+		require 'vue/v_menu.php';
+		require 'controleur/c_gererJeux.php';
+		break;
+	}
+	case 'gererMarques' : {
+		$menuActif = 'Marques';	// pour garder le menu correspondant ouvert
+		require 'vue/v_menu.php';
+		require 'controleur/c_gererMarques.php';
+		break;
+	}
+	case 'gererPegis' : {
+		$menuActif = 'Pegis';	// pour garder le menu correspondant ouvert
+		require 'vue/v_menu.php';
+		require 'controleur/c_gererPegis.php';
+		break;
+	}
+	case 'gererPlateformes' : {
+		$menuActif = 'Plateformes';	// pour garder le menu correspondant ouvert
+		require 'vue/v_menu.php';
+		require 'controleur/c_gererPlateformes.php';
+		break;
+	}
 }
 
 // Fermeture de la connexion (C)

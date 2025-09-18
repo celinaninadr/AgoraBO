@@ -1623,8 +1623,8 @@ PANELS CONFIGURATIONS
 }
 
 /* Grid Showcase*/
-
-	margin-bottom: 15px;
+.show-grid {
+    margin-bottom: 15px;
 }
 
 .show-grid [class^=col-] {
